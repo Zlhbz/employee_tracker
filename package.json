@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Zlhbz/employee_tracker#readme",
   "dependencies": {
+    "inquirer": "^7.0.4",
     "mysql": "^2.18.1"
   }
 }
