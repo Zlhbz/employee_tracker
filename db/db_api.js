@@ -162,15 +162,17 @@ function display_all_employees_by_department() {
 
 
 function update_employee_role() {
-    var query = "SELECT concat(employee.first_name,' ', employee.last_name) as employees from employee"
+    var query = "SELECT id, concat(employee.first_name,' ', employee.last_name) as employees from employee"
     connection.query(query, function (err, res) {
-        console.log(res);
+        // console.log(res);
         let people = [];
+        let people_id = [];
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             people.push(res[i].employees);
+            people_id.push(res[i]);
         }
-
+        // console.log(people_id);
         var query2 = "SELECT title,id FROM role"
         connection.query(query2, function (err, res) {
             let roles = [];
@@ -193,19 +195,30 @@ function update_employee_role() {
                 choices: roles
             }
             ]).then(function (answer) {
-                console.log(answer);
+                // console.log(answer);
                 let id1;
-                for (let i = 0; i < titles_id.length; i++) {
+                let id2;
+                for (let i = 0; i < role_id.length; i++) {
                     if (answer.role === role_id[i].title) {
                         id1 = role_id[i].id;
                     }
                 }
 
-                // for (let i = 0; i < manager_id.length; i++) {
-                //     if (response.manager === manager_id[i].manager_name) {
-                //         id2 = manager_id[i].id;
-                //     }
-                // }
+                for (let i = 0; i < people_id.length; i++) {
+                    if (answer.person === people_id[i].employees) {
+                        id2 = people_id[i].id;
+                    }
+                }
+
+                var query3 = `UPDATE employee
+                SET role_id = '${id1}'
+                WHERE employee.id = '${id2}';`
+
+                connection.query(query3, function (err, res) {
+                    if (err) throw err;
+                    // console.log("done");
+
+                })
 
             })
 
@@ -217,8 +230,5 @@ function update_employee_role() {
 module.exports.display_all_employees = display_all_employees;
 module.exports.display_all_employees_by_department = display_all_employees_by_department;
 module.exports.main_questions = main_questions;
-
-// module.exports.department_questions = department_questions;
-// module.exports.departments_all = departments_all;
 module.exports.add_an_employee = add_an_employee;
 module.exports.update_employee_role = update_employee_role;
