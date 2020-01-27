@@ -1,6 +1,6 @@
 const connection = require("./connection")
 const consoleTable = require('console.table');
-const inquirer = require("Inquirer");
+const inquirer = require("inquirer");
 
 
 var main_questions = [{
