@@ -1,19 +1,6 @@
 const inquirer = require("Inquirer");
 const alldb = require("./db/db_api");
-// const consoleTable = require('console.table');
 
-
-// const table = consoleTable.getTable([
-//     {
-//         name: 'zeliha',
-//         age: 35
-//     }, {
-//         name: 'ayse',
-//         age: 60
-//     }
-// ]);
-
-// console.log(table);
 
 runAll();
 
@@ -28,7 +15,7 @@ function runAll() {
                 break;
 
             case "View All Employees by Department":
-
+                alldb.display_all_employees_by_department();
                 break;
 
             case "View All Employees by Manager":
@@ -36,7 +23,7 @@ function runAll() {
                 break;
 
             case "Add Employee":
-
+                alldb.add_employee_f();
                 break;
 
             case "Remove Employee":
