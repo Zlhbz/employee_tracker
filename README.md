@@ -19,6 +19,7 @@ Creating intuitive to use app in order to create database and update, add, view 
 * Main questions are not being asked each time any choice is done(need to be fixed)
 
 ### Example Behavior
+* gif is slow but works
 
 
 
