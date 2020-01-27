@@ -59,7 +59,7 @@ function add_an_employee() {
                 name: "manager",
                 choices: array_names
             }]).then(function (response) {
-                console.log(response);
+                // console.log(response);
                 let id1;
                 let id2;
                 for (let i = 0; i < titles_id.length; i++) {
@@ -73,14 +73,14 @@ function add_an_employee() {
                         id2 = manager_id[i].id;
                     }
                 }
-                console.log(id1);
-                console.log(id2);
+                // console.log(id1);
+                // console.log(id2);
 
                 var query_last = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
                 VALUES('${response.firstname}', '${response.lastname}', '${id1}', '${id2}');`
                 connection.query(query_last, function (err, res) {
                     if (err) throw err;
-                    console.log("done");
+                    // console.log("done");
 
                 })
 
