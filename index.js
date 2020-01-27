@@ -1,4 +1,4 @@
-const inquirer = require("Inquirer");
+const inquirer = require("inquirer");
 const alldb = require("./db/db_api");
 
 

@@ -31,4 +31,4 @@ VALUES("Jack", "Brown", 1, null),
     ("Ayse", "Koc", 5, null),
     ("Indra", "Joshi", 6, 5),
     ("Mustafa", "Genc", 7, null),
-    ("Sujin", "Lee", 8, 7);
+    ("Sujin", "Oh", 8, 7);
