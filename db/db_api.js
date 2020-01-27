@@ -19,30 +19,79 @@ var main_questions = [{
     ]
 }]
 
-var add_employee = [{
+function add_an_employee() {
+    var array_titles = [];
+    var array_names = [];
+    var titles_id = [];
+    var manager_id = [];
 
-    type: "input",
-    message: "What is the first name of the employee?",
-    name: "firstname",
-},
-{
-    type: "input",
-    message: "What is the last name of the employee?",
-    name: "lastname"
-},
-{
-    type: "list",
-    message: "What is the role of employee?",
-    name: "role",
-    choices: ""
-},
-{
-    type: "list",
-    message: "Who is the manager of employee?",
-    name: "manager",
-    choices: ""
-}]
+    connection.query("SELECT title, id FROM role", function (err, res) {
+        if (err) throw err;
+        for (let i = 0; i < res.length; i++) {
+            array_titles.push(res[i].title);
+            titles_id.push(res[i]);
+        }
 
+        connection.query("SELECT id, concat(employee.first_name,' ', employee.last_name) as manager_name FROM employee", function (err, res) {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                array_names.push(res[i].manager_name);
+                manager_id.push(res[i]);
+            }
+
+            inquirer.prompt([{
+
+                type: "input",
+                message: "What is the first name of the employee?",
+                name: "firstname",
+            },
+            {
+                type: "input",
+                message: "What is the last name of the employee?",
+                name: "lastname"
+            },
+            {
+                type: "list",
+                message: "What is the role of employee?",
+                name: "role",
+                choices: array_titles
+            },
+            {
+                type: "list",
+                message: "Who is the manager of employee?",
+                name: "manager",
+                choices: array_names
+            }]).then(function (response) {
+                console.log(response);
+                let id1;
+                let id2;
+                for (let i = 0; i < titles_id.length; i++) {
+                    if (response.role === titles_id[i].title) {
+                        id1 = titles_id[i].id;
+                    }
+                }
+
+                for (let i = 0; i < manager_id.length; i++) {
+                    if (response.manager === manager_id[i].manager_name) {
+                        id2 = manager_id[i].id;
+                    }
+                }
+                console.log(id1);
+                console.log(id2);
+
+                var query_last = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                VALUES('${response.firstname}', '${response.lastname}', '${id1}', '${id2}');`
+                connection.query(query_last, function (err, res) {
+                    if (err) throw err;
+                    console.log("done");
+
+                })
+
+            })
+        })
+
+    })
+}
 
 function display_all_employees() {
     // console.log("display_all was called");
@@ -122,10 +171,13 @@ function display_all_employees_by_department() {
 
 
 
+
+
 module.exports.display_all_employees = display_all_employees;
 module.exports.display_all_employees_by_department = display_all_employees_by_department;
 module.exports.main_questions = main_questions;
-module.exports.add_employee = add_employee;
+
 // module.exports.department_questions = department_questions;
 // module.exports.departments_all = departments_all;
-// module.exports.add_employee_f = add_employee_f;
+module.exports.add_an_employee = add_an_employee;
+// module.exports.all_titles = all_titles;

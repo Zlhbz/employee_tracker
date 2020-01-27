@@ -23,7 +23,8 @@ function runAll() {
                 break;
 
             case "Add Employee":
-                alldb.add_employee_f();
+                // alldb.test();
+                alldb.add_an_employee();
                 break;
 
             case "Remove Employee":
