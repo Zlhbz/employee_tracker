@@ -6,8 +6,7 @@ runAll();
 
 function runAll() {
     inquirer.prompt(alldb.main_questions).then(function (answer) {
-        // console.log(answer);
-        // console.log("--> action " + answer.main);
+
         switch (answer.main) {
 
             case "View All Employees":
@@ -23,11 +22,11 @@ function runAll() {
                 break;
 
             case "Add Employee":
-                // alldb.test();
                 alldb.add_an_employee();
                 break;
 
             case "Update Employee Role":
+                alldb.update_employee_role()
 
                 break;
 

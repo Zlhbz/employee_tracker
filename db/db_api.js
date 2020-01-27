@@ -11,11 +11,8 @@ var main_questions = [{
     choices: [
         "View All Employees",
         "View All Employees by Department",
-        "View All Employees by Manager",
         "Add Employee",
-        "Remove Employee",
         "Update Employee Role",
-        "Add Employee Manager",
     ]
 }]
 
@@ -164,13 +161,57 @@ function display_all_employees_by_department() {
 }
 
 
+function update_employee_role() {
+    var query = "SELECT concat(employee.first_name,' ', employee.last_name) as employees from employee"
+    connection.query(query, function (err, res) {
+        console.log(res);
+        let people = [];
+        if (err) throw err;
+        for (let i = 0; i < res.length; i++) {
+            people.push(res[i].employees);
+        }
 
+        var query2 = "SELECT title,id FROM role"
+        connection.query(query2, function (err, res) {
+            let roles = [];
+            let role_id = [];
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                roles.push(res[i].title);
+                role_id.push(res[i]);
+            }
+            inquirer.prompt([{
+                type: "list",
+                message: "Which employee's role do you want to update?",
+                name: "person",
+                choices: people
+            },
+            {
+                type: "list",
+                message: "Which role do you want to add to the employee?",
+                name: "role",
+                choices: roles
+            }
+            ]).then(function (answer) {
+                console.log(answer);
+                let id1;
+                for (let i = 0; i < titles_id.length; i++) {
+                    if (answer.role === role_id[i].title) {
+                        id1 = role_id[i].id;
+                    }
+                }
 
+                // for (let i = 0; i < manager_id.length; i++) {
+                //     if (response.manager === manager_id[i].manager_name) {
+                //         id2 = manager_id[i].id;
+                //     }
+                // }
 
+            })
 
-
-
-
+        })
+    })
+}
 
 
 module.exports.display_all_employees = display_all_employees;
@@ -180,4 +221,4 @@ module.exports.main_questions = main_questions;
 // module.exports.department_questions = department_questions;
 // module.exports.departments_all = departments_all;
 module.exports.add_an_employee = add_an_employee;
-// module.exports.all_titles = all_titles;
+module.exports.update_employee_role = update_employee_role;
