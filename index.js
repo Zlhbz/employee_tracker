@@ -27,17 +27,10 @@ function runAll() {
                 alldb.add_an_employee();
                 break;
 
-            case "Remove Employee":
-
-                break;
-
             case "Update Employee Role":
 
                 break;
 
-            case "Add Employee Manager":
-
-                break;
         }
     });
 }
